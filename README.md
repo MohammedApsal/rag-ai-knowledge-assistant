@@ -67,3 +67,23 @@ FastAPI Backend
           │
           ▼
     Generated Answer
+
+    ## 🔄 How It Works
+
+PDF Document
+↓
+Text Extraction
+↓
+Text Chunking
+↓
+Text Embeddings
+↓
+Vector Database
+↓
+Semantic Search
+↓
+Relevant Context
+↓
+Ollama LLM
+↓
+Generated Answer
