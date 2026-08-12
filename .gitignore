@@ -36,7 +36,7 @@ Thumbs.db
 *.log
 
 # Uploaded documents
-uploads/
+data/documents/
 
 # Temporary files
 tmp/

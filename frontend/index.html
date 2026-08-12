@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RAG AI Knowledge Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- Header -->
+        <header class="header">
+            <div>
+                <h1>RAG AI Knowledge Assistant</h1>
+                <p>Ask questions from your documents using AI</p>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                Backend Online
+            </div>
+        </header>
+
+
+        <!-- Main Content -->
+        <main class="container">
+
+            <!-- Upload Section -->
+            <section class="upload-card">
+
+                <h2>Upload Document</h2>
+
+                <p class="description">
+                    Upload a PDF document and ask questions about its content.
+                </p>
+
+                <div class="upload-area">
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".pdf"
+                    >
+
+                    <label for="fileInput" class="upload-button">
+                        📄 Choose PDF
+                    </label>
+
+                    <p id="fileName">
+                        No file selected
+                    </p>
+
+                </div>
+
+                <button id="uploadButton" class="primary-button">
+                    Upload Document
+                </button>
+
+                <p id="uploadStatus"></p>
+
+            </section>
+
+
+            <!-- Chat Section -->
+            <section class="chat-card">
+
+                <h2>Ask Your Document</h2>
+
+                <div id="chatBox" class="chat-box">
+
+                    <div class="message assistant">
+                        <strong>AI:</strong>
+                        <p>
+                            Hello! Upload a document and ask me a question.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="question-area">
+
+                    <textarea
+                        id="questionInput"
+                        placeholder="Ask something about your document..."
+                    ></textarea>
+
+                    <button id="askButton" class="primary-button">
+                        Ask AI
+                    </button>
+
+                </div>
+
+                <p id="askStatus"></p>
+
+            </section>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer>
+            RAG AI Knowledge Assistant • Powered by FastAPI + Ollama
+        </footer>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
