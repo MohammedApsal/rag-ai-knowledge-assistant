@@ -3,5 +3,4 @@ fastapi
 uvicorn
 openai
 pypdf
-sentence-transformers
 scikit-learn
