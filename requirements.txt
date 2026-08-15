@@ -4,3 +4,4 @@ uvicorn
 openai
 pypdf
 scikit-learn
+python-multipart
