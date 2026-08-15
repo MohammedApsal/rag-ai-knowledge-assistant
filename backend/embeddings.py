@@ -1,28 +1,12 @@
-from sentence_transformers import SentenceTransformer
-
-
-model = SentenceTransformer("all-MiniLM-L6-v2")
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 def create_embeddings(chunks):
-    embeddings = model.encode(chunks)
+    vectorizer = TfidfVectorizer(
+        stop_words="english",
+        max_features=5000
+    )
 
-    return embeddings
+    embeddings = vectorizer.fit_transform(chunks).toarray()
 
-
-if __name__ == "__main__":
-
-    chunks = [
-        "Artificial Intelligence is the field of computer science.",
-        "RAG combines document retrieval with a language model.",
-        "A RAG system retrieves relevant information from a knowledge base."
-    ]
-
-    embeddings = create_embeddings(chunks)
-
-    print("===== EMBEDDINGS =====")
-    print("Number of chunks:", len(embeddings))
-    print("Embedding size:", len(embeddings[0]))
-
-    print("\nFirst embedding:")
-    print(embeddings[0])
+    return embeddings, vectorizer

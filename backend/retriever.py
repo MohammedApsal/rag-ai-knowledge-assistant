@@ -1,13 +1,12 @@
 import numpy as np
 
 from backend.vector_store import build_vector_store
-from backend.embeddings import model
 from backend.llm import generate_answer
 
 
-def search(query, chunks, embeddings, top_k=4):
+def search(query, chunks, embeddings, vectorizer, top_k=4):
     # Create embedding for the user's question
-    query_embedding = model.encode([query])[0]
+    query_embedding = vectorizer.transform([query]).toarray()[0]
 
     # Calculate cosine similarity
     similarities = np.dot(embeddings, query_embedding) / (
@@ -31,14 +30,16 @@ def search(query, chunks, embeddings, top_k=4):
 
 if __name__ == "__main__":
 
+    pdf_path = "data/documents/rag_test_knowledge.pdf"
+
     # Build vector store
-    chunks, embeddings = build_vector_store()
+    chunks, embeddings, vectorizer = build_vector_store(pdf_path)
 
     # User question
     query = "What is RAG?"
 
     # Search for relevant chunks
-    results = search(query, chunks, embeddings)
+    results = search(query, chunks, embeddings, vectorizer)
 
     print("\n===== SEARCH RESULTS =====")
 
@@ -46,14 +47,3 @@ if __name__ == "__main__":
         print(f"\nResult {i}")
         print("Score:", result["score"])
         print("Text:", result["chunk"])
-
-    # Combine retrieved chunks into context
-    context = "\n\n".join(
-        result["chunk"] for result in results
-    )
-
-    # Generate answer using Llama 3.2
-    answer = generate_answer(query, context)
-
-    print("\n===== FINAL RAG ANSWER =====")
-    print(answer)

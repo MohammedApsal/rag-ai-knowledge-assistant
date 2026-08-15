@@ -1,8 +1,15 @@
-import requests
+import os
+from dotenv import load_dotenv
+from openai import OpenAI
 
+load_dotenv()
 
-OLLAMA_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "llama3.2"
+client = OpenAI(
+    api_key=os.getenv("GROQ_API_KEY"),
+    base_url="https://api.groq.com/openai/v1"
+)
+
+MODEL_NAME = "openai/gpt-oss-20b"
 
 
 def generate_answer(question, context):
@@ -10,17 +17,15 @@ def generate_answer(question, context):
     prompt = f"""
 You are a document question-answering assistant.
 
-Your job is to answer the user's question using ONLY the document context provided below.
+Answer the user's question using ONLY the document context below.
 
-IMPORTANT RULES:
-1. Use the Context as the source of truth.
-2. Do not use your own general knowledge.
-3. Do not invent or assume information.
-4. If the answer is clearly present in the Context, answer it directly.
-5. If the answer is NOT present in the Context, respond exactly:
+Rules:
+1. Use the context as the source of truth.
+2. Do not use outside knowledge.
+3. Do not invent information.
+4. If the answer is not present in the context, say:
 "I couldn't find the answer in the uploaded document."
-6. Keep the answer clear and concise.
-7. You may combine information from multiple context sections if necessary.
+5. Keep the answer clear and concise.
 
 DOCUMENT CONTEXT:
 -----------------
@@ -33,18 +38,15 @@ USER QUESTION:
 ANSWER:
 """
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
-            "model": MODEL_NAME,
-            "prompt": prompt,
-            "stream": False,
-            "options": {
-                "temperature": 0
+    response = client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
             }
-        }
+        ],
+        temperature=0
     )
 
-    response.raise_for_status()
-
-    return response.json()["response"].strip()
+    return response.choices[0].message.content

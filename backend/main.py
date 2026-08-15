@@ -83,13 +83,14 @@ async def ask_question(request: AskRequest):
             "answer": "Please upload a PDF document first."
         }
 
-    chunks, embeddings = build_vector_store(CURRENT_PDF_PATH)
+    chunks, embeddings, vectorizer = build_vector_store(CURRENT_PDF_PATH)
 
     results = search(
-        request.question,
-        chunks,
-        embeddings
-    )
+    request.question,
+    chunks,
+    embeddings,
+    vectorizer
+)
 
     context = "\n\n".join(
         result["chunk"] for result in results

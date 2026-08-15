@@ -18,18 +18,18 @@ def build_vector_store(pdf_path):
     print("Number of chunks:", len(chunks))
 
     # 3. Create embeddings
-    embeddings = create_embeddings(chunks)
+    embeddings, vectorizer = create_embeddings(chunks)
 
     print("Embeddings created successfully.")
     print("Embedding dimensions:", len(embeddings[0]))
 
-    return chunks, embeddings
+    return chunks, embeddings, vectorizer
 
 
 if __name__ == "__main__":
     pdf_path = "data/documents/rag_test_knowledge.pdf"
 
-    chunks, embeddings = build_vector_store(pdf_path)
+    chunks, embeddings, vectorizer = build_vector_store(pdf_path)
 
     print("\n===== VECTOR STORE TEST =====")
 
